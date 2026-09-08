@@ -17,6 +17,14 @@ classifiers = [
 ]
 license = "MIT"
 license-files = ["LICENSE"]
+dependencies = [
+  "nidaqmx",
+  "pyserial",
+  "pyvisa-py",
+  "numpy",
+  "pyttsx3",
+  "YorkUphysLab",
+]
 
 [project.urls]
 Homepage = "https://github.com/brucehoward-physics/YorkUphysLabAssistant"
@@ -24,12 +32,3 @@ Issues = "https://github.com/brucehoward-physics/YorkUphysLabAssistant/issues"
 
 [tool.setuptools.packages]
 find = {} # Copied from the YorkUphysLab setup.cfg
-
-[options]
-python_requires = >=3.7
-install_requires =
-	nidaqmx
-	pyserial
-	pyvisa-py
-	numpy
-	pyttsx3
