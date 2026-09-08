@@ -1,4 +1,4 @@
-This package is meant to be used alongside YorkUphysLab
+This package is meant to be used alongside YorkUphysLab - especially the PyPI package version YorkUphysLabV2
 
 See: https://github.com/m-kareem/YorkUphysLab
 

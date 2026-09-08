@@ -4,7 +4,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = "YorkUphysLabAssistant"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
   { name="Bruce Howard", email="blhoward@yorku.ca" },
 ]
@@ -23,7 +23,7 @@ dependencies = [
   "pyvisa-py",
   "numpy",
   "pyttsx3",
-  "YorkUphysLab",
+  "YorkUphysLabV2",
 ]
 
 [project.urls]
