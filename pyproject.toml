@@ -1,3 +1,34 @@
 [build-system]
 requires = ['setuptools>=42']
 build-backend = 'setuptools.build_meta'
+
+[project]
+name = "YorkUphysLabAssistant"
+version = "1.0.0"
+authors = [
+  { name="Bruce Howard", email="blhoward@yorku.ca" },
+]
+description = "A Python package to provide control and readback related to YU physics labs equipment."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+	"Programming Language :: Python :: 3",
+	"Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICENSE"]
+
+[project.urls]
+Homepage = "https://github.com/brucehoward-physics/YorkUphysLabAssistant"
+Issues = "https://github.com/brucehoward-physics/YorkUphysLabAssistant/issues"
+
+[tool.setuptools.packages]
+find = {} # Copied from the YorkUphysLab setup.cfg
+
+[options]
+python_requires = >=3.7
+install_requires =
+	nidaqmx
+	pyserial
+	pyvisa-py
+	numpy
