@@ -131,6 +131,7 @@ class MyLabMate:
             with io.StringIO() as buf, redirect_stdout(buf):
                 self.in_class.connect()
                 self.speak(buf.getvalue())
+            self.speak('The function generator, takes as input via SET the amplitude, frequency, waveform, and offset, as well as whether the output is on or off. The following statements will tell you the configuration.')
             return
         else:
             self.speak('I cannot run setup for the hardware class associated to this Lab Mate.')
@@ -216,10 +217,26 @@ class MyLabMate:
             self.speak( position, True )
             return
         elif self.config['keyword'] == 'AFG':
-            self.speak('The function generator, takes as input via SET the amplitude, frequency, waveform, and offset, as well as whether the output is on or off. The following statements will tell you the configuration.')
+            self.speak('Your current user-defined settings are as follows:')
             for key in self.config.keys():
                 statement = key + ' is ' + str(self.config[key])
                 self.speak(statement)
+            self.speak('The device is set up in the following manner:')
+            keyList=['FREQ','AMPL','VOLT:UNIT','FUNC','DCO','OUTP']
+            nameDict={'FREQ':'Frequency', 'AMPL':'Amplitude', 'VOLT:UNIT':'Amplitude format',
+                      'FUNC':'Function', 'DCO':'DC Offset', 'OUTP':'Output' }
+            unitDict={'FREQ':'Hz', 'AMPL':'V', 'VOLT:UNIT':'', 'FUNC':'', 'DCO':'V', 'OUTP':'' }
+            try:
+                for key in keyList:
+                    # Based on the *IDN? command used in YorkUphysLab and a Gemini suggestion about the meaning of "?"
+                    # I tried to probe some values directly in the SOUR1:ITEM style it is using to SET things in
+                    # YorkUphysLab and found this largely seems to work. Let's use this to print things out now.
+                    command=f'SOUR1:{key}?'
+                    self.in_class.inst.write(command.encode('ascii') + b'\r\n')
+                    readout=self.in_class.inst.readline().strip().decode('ascii')
+                    self.speak( nameDict[key]+' is '+readout+unitDict[key] )
+            except:
+                self.speak('There was an error reading device.')
             return
         else:
             self.speak('I cannot run GET for the hardware class associated to this Lab Mate.')
