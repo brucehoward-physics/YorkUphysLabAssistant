@@ -236,11 +236,11 @@ class MyLabMate:
                     self.in_class.inst.write(command.encode('ascii') + b'\r\n')
                     readout=self.in_class.inst.readline().strip().decode('ascii')
                     if typeDict[key]=='float':
-                        readoutVal=float(readout)
-                    if typeDict[key]=='string':
-                        readoutVal=readout
-                    if typeDict[key]=='bool':
-                        readoutVal=bool(readout)
+                        readoutVal = str( float(readout) )
+                    elif typeDict[key]=='string':
+                        readoutVal = readout
+                    elif typeDict[key]=='bool':
+                        readoutVal = str( bool(readout) )
                     self.speak( nameDict[key]+' is '+readoutVal+' '+unitDict[key] )
             except:
                 self.speak('There was an error reading device.')
