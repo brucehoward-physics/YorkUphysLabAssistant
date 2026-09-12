@@ -240,7 +240,7 @@ class MyLabMate:
                     elif typeDict[key]=='string':
                         readoutVal = readout
                     elif typeDict[key]=='bool':
-                        readoutVal = str( bool(readout) )
+                        readoutVal = str( int(readout)==1 )
                     self.speak( nameDict[key]+' is '+readoutVal+' '+unitDict[key] )
             except:
                 self.speak('There was an error reading device.')
