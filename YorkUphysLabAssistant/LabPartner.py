@@ -131,7 +131,7 @@ class MyLabMate:
             with io.StringIO() as buf, redirect_stdout(buf):
                 self.in_class.connect()
                 self.speak(buf.getvalue())
-            self.speak('The function generator, takes as input via SET the amplitude, frequency, waveform, and offset, as well as whether the output is on or off. The following statements will tell you the configuration.')
+            self.speak('The function generator, takes as input via SET the amplitude, frequency, waveform, and offset, as well as whether the output is on or off. The GET command will read out the settings.')
             return
         else:
             self.speak('I cannot run setup for the hardware class associated to this Lab Mate.')
@@ -225,7 +225,8 @@ class MyLabMate:
             keyList=['FREQ','AMPL','VOLT:UNIT','FUNC','DCO','OUTP']
             nameDict={'FREQ':'Frequency', 'AMPL':'Amplitude', 'VOLT:UNIT':'Amplitude format',
                       'FUNC':'Function', 'DCO':'DC Offset', 'OUTP':'Output' }
-            unitDict={'FREQ':'Hz', 'AMPL':'V', 'VOLT:UNIT':'', 'FUNC':'', 'DCO':'V', 'OUTP':'' }
+            unitDict={'FREQ':'Hertz', 'AMPL':'Volts', 'VOLT:UNIT':'', 'FUNC':'', 'DCO':'Volts', 'OUTP':''}
+            typeDict={'FREQ':'float', 'AMPL':'float', 'VOLT:UNIT':'string', 'FUNC':'string', 'DCO':'float', 'OUTP':'bool'}
             try:
                 for key in keyList:
                     # Based on the *IDN? command used in YorkUphysLab and a Gemini suggestion about the meaning of "?"
@@ -234,7 +235,13 @@ class MyLabMate:
                     command=f'SOUR1:{key}?'
                     self.in_class.inst.write(command.encode('ascii') + b'\r\n')
                     readout=self.in_class.inst.readline().strip().decode('ascii')
-                    self.speak( nameDict[key]+' is '+readout+unitDict[key] )
+                    if typeDict[key]=='float':
+                        readoutVal=float(readout)
+                    if typeDict[key]=='string':
+                        readoutVal=readout
+                    if typeDict[key]=='bool':
+                        readoutVal=bool(readout)
+                    self.speak( nameDict[key]+' is '+readoutVal+' '+unitDict[key] )
             except:
                 self.speak('There was an error reading device.')
             return
